@@ -67,15 +67,15 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
 
           if [ -f "site/pdf/document.pdf" ]; then
-            mv "site/pdf/document.pdf" "site/pdf/data-engineering-book-zh-${VERSION}.pdf"
-            echo "Renamed zh PDF -> data-engineering-book-zh-${VERSION}.pdf"
+            mv "site/pdf/document.pdf" "site/pdf/LLM-Data-Engineering-Book-zh-${VERSION}.pdf"
+            echo "Renamed zh PDF -> LLM-Data-Engineering-Book-zh-${VERSION}.pdf"
           else
             echo "::warning::Chinese PDF not found at site/pdf/document.pdf"
           fi
 
           if [ -f "site/en/pdf/document.pdf" ]; then
-            mv "site/en/pdf/document.pdf" "site/en/pdf/data-engineering-book-en-${VERSION}.pdf"
-            echo "Renamed en PDF -> data-engineering-book-en-${VERSION}.pdf"
+            mv "site/en/pdf/document.pdf" "site/en/pdf/LLM-Data-Engineering-Book-en-${VERSION}.pdf"
+            echo "Renamed en PDF -> LLM-Data-Engineering-Book-en-${VERSION}.pdf"
           else
             echo "::warning::English PDF not found at site/en/pdf/document.pdf"
           fi
