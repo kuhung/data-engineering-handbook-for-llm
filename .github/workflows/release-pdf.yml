@@ -49,10 +49,13 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Generate PDF Config
+        run: uv run python scripts/generate_pdf_config.py
+
       - name: Build site with PDF
         env:
           ENABLE_PDF_EXPORT: 1
-        run: uv run mkdocs build
+        run: uv run mkdocs build -f mkdocs-pdf.yml
 
       - name: Debug - list generated files
         if: always()

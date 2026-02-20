@@ -8,7 +8,8 @@ dependencies = [
     "mkdocs-material>=9.5.0",
     "mkdocs-with-pdf>=0.9.3",
     "mkdocs-glightbox>=0.4.0",
-    "mkdocs-static-i18n>=1.2.0"
+    "mkdocs-static-i18n>=1.2.0",
+    "python-markdown-math>=0.8"
 ]
 
 [tool.uv]
