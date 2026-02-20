@@ -55,7 +55,7 @@ plugins:
       cover: true
       back_cover: true
       toc_title: "目录"
-      output_path: pdf/
+      output_path: pdf/document.pdf
       enabled_if_env: ENABLE_PDF_EXPORT
   - i18n:
       reconfigure_material: true     # 自动适配 Material 主题
