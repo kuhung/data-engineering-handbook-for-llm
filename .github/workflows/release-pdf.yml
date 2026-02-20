@@ -1,0 +1,62 @@
+name: Release PDF
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install System Dependencies
+        # weasyprint 需要的系统库
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build PDF
+        env:
+          ENABLE_PDF_EXPORT: 1
+        run: uv run mkdocs build
+
+      - name: Rename PDFs
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          if [ -z "$VERSION" ]; then VERSION="latest"; fi
+          
+          # 重命名中文 PDF
+          if [ -f "site/pdf/document.pdf" ]; then
+            mv "site/pdf/document.pdf" "site/pdf/data-engineering-book-zh-${VERSION}.pdf"
+          fi
+          
+          # 重命名英文 PDF (如果存在)
+          if [ -f "site/en/pdf/document.pdf" ]; then
+            mv "site/en/pdf/document.pdf" "site/en/pdf/data-engineering-book-en-${VERSION}.pdf"
+          fi
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            site/pdf/*.pdf
+            site/en/pdf/*.pdf
+          generate_release_notes: true

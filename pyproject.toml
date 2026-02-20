@@ -1,0 +1,15 @@
+[project]
+name = "data-engineering-book"
+version = "0.1.0"
+description = "大模型数据工程：架构、算法及项目实战"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "mkdocs-material>=9.5.0",
+    "mkdocs-with-pdf>=0.9.3",
+    "mkdocs-glightbox>=0.4.0",
+    "mkdocs-static-i18n>=1.2.0"
+]
+
+[tool.uv]
+dev-dependencies = []

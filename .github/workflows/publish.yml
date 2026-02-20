@@ -2,7 +2,8 @@ name: publish-site
 on:
   push:
     branches:
-      - main  # 确认为你的主分支名称
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,13 +14,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Configure Python
-        uses: actions/setup-python@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: 3.x
-          
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install
+
       - name: Install dependencies
-        run: pip install mkdocs-material mkdocs-glightbox "mkdocs-static-i18n[material]"
+        run: uv sync
 
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+        # 注意：这里我们故意不开启 ENABLE_PDF_EXPORT，以加快 Pages 构建速度
+        # 如果需要在网页上提供 PDF 下载，可以取消注释并安装系统依赖
+        run: uv run mkdocs gh-deploy --force

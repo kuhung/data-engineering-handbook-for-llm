@@ -49,6 +49,14 @@ theme:
 plugins:
   - search                           # 全文搜索 (内置)
   - glightbox                        # 图片点击放大 (书籍中架构图较多，必备)
+  - with-pdf:                        # PDF 导出插件
+      author: DataScale AI
+      copyright: "© 2026 DataScale AI"
+      cover: true
+      back_cover: true
+      toc_title: "目录"
+      output_path: pdf/
+      enabled_if_env: ENABLE_PDF_EXPORT
   - i18n:
       reconfigure_material: true     # 自动适配 Material 主题
       docs_structure: folder         # 文件夹策略：zh/ 和 en/ 目录
