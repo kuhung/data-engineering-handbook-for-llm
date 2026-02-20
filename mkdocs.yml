@@ -54,6 +54,7 @@ plugins:
       copyright: "© 2026 DataScale AI"
       cover: true
       back_cover: true
+      cover_subtitle: "架构、算法及项目实战" # 显式设置副标题，避免显示 "None"
       toc_title: "目录"
       output_path: pdf/document.pdf
       enabled_if_env: ENABLE_PDF_EXPORT
