@@ -1,0 +1,115 @@
+/* PDF Specific Styles */
+@media print {
+    /* General Typography */
+    body {
+        font-family: "Noto Serif SC", "Songti SC", serif;
+        font-size: 11pt;
+        line-height: 1.5;
+        color: #000;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Noto Sans SC", sans-serif;
+        color: #2c3e50;
+        page-break-after: avoid;
+    }
+
+    h1 {
+        font-size: 24pt;
+        border-bottom: 2px solid #2c3e50;
+        padding-bottom: 10px;
+        margin-top: 0;
+    }
+
+    h2 {
+        font-size: 18pt;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+        margin-top: 1.5em;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-top: 1.2em;
+    }
+
+    /* Code Blocks */
+    pre {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        white-space: pre-wrap; /* Wrap long lines */
+        word-wrap: break-word;
+        page-break-inside: avoid;
+        font-family: "Fira Code", monospace;
+        font-size: 9pt;
+    }
+
+    code {
+        font-family: "Fira Code", monospace;
+        background-color: #f8f8f8;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 0.9em;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1em 0;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        font-size: 10pt;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1em auto;
+        page-break-inside: avoid;
+    }
+
+    /* Blockquotes */
+    blockquote {
+        border-left: 4px solid #2c3e50;
+        margin: 1em 0;
+        padding-left: 1em;
+        color: #555;
+        background-color: #f9f9f9;
+        page-break-inside: avoid;
+    }
+
+    /* Links */
+    a {
+        color: #2980b9;
+        text-decoration: none;
+    }
+    
+    /* Math Formulas */
+    .arithmatex, math {
+        display: inline-block;
+        max-width: 100%;
+        overflow-x: hidden;
+        font-family: "STIX Two Math", serif; /* Better math font if available */
+    }
+    
+    /* Hide interactive elements if any remain */
+    .md-clipboard, .md-content__icon {
+        display: none !important;
+    }
+}
