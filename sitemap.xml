@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part1/1_1_data_change/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_1_data_change/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part1/1_2_data_infra/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_2_data_infra/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part2/2_1_data_acquisition/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_1_data_acquisition/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part2/2_2_cleaning_denoising/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_2_cleaning_denoising/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part2/2_3_tokenization_serialization/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_3_tokenization_serialization/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part3/3_1_image_text_pairs/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_1_image_text_pairs/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part3/3_2_recaptioning/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_2_recaptioning/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part3/3_3_video_audio/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_3_video_audio/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part4/4_1_sft_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_1_sft_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part4/4_2_synthetic_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_2_synthetic_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part4/4_3_preference_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_3_preference_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part5/5_1_rag_pipeline/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_1_rag_pipeline/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part5/5_2_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_2_mm_rag/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part6/6_1_mini_c4/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_1_mini_c4/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part6/6_2_legal_sft/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_2_legal_sft/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part6/6_3_llava_instruct/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_3_llava_instruct/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part6/6_4_synthetic_textbook/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_4_synthetic_textbook/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/part6/6_5_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_5_mm_rag/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part1/1_1_data_change/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_1_data_change/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part1/1_2_data_infra/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_2_data_infra/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part2/2_1_data_acquisition/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_1_data_acquisition/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part2/2_2_cleaning_denoising/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_2_cleaning_denoising/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part2/2_3_tokenization_serialization/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_3_tokenization_serialization/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part3/3_1_image_text_pairs/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_1_image_text_pairs/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part3/3_2_recaptioning/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_2_recaptioning/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part3/3_3_video_audio/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_3_video_audio/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part4/4_1_sft_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_1_sft_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part4/4_2_synthetic_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_2_synthetic_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part4/4_3_preference_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_3_preference_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part5/5_1_rag_pipeline/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_1_rag_pipeline/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part5/5_2_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_2_mm_rag/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part6/6_1_mini_c4/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_1_mini_c4/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part6/6_2_legal_sft/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_2_legal_sft/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part6/6_3_llava_instruct/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_3_llava_instruct/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part6/6_4_synthetic_textbook/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_4_synthetic_textbook/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/en/part6/6_5_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_5_mm_rag/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part1/1_1_data_change/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_1_data_change/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_1_data_change/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part1/1_2_data_infra/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part1/1_2_data_infra/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part1/1_2_data_infra/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part2/2_1_data_acquisition/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_1_data_acquisition/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_1_data_acquisition/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part2/2_2_cleaning_denoising/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_2_cleaning_denoising/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_2_cleaning_denoising/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part2/2_3_tokenization_serialization/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part2/2_3_tokenization_serialization/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part2/2_3_tokenization_serialization/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part3/3_1_image_text_pairs/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_1_image_text_pairs/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_1_image_text_pairs/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part3/3_2_recaptioning/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_2_recaptioning/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_2_recaptioning/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part3/3_3_video_audio/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_3_video_audio/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part3/3_3_video_audio/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part4/4_1_sft_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_1_sft_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_1_sft_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part4/4_2_synthetic_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_2_synthetic_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_2_synthetic_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part4/4_3_preference_data/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_3_preference_data/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part4/4_3_preference_data/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part5/5_1_rag_pipeline/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_1_rag_pipeline/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_1_rag_pipeline/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part5/5_2_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part5/5_2_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part5/5_2_mm_rag/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part6/6_1_mini_c4/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_1_mini_c4/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_1_mini_c4/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part6/6_2_legal_sft/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_2_legal_sft/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_2_legal_sft/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part6/6_3_llava_instruct/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_3_llava_instruct/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_3_llava_instruct/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part6/6_4_synthetic_textbook/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_4_synthetic_textbook/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_4_synthetic_textbook/"/>
+    </url>
+    <url>
+        <loc>https://datascale-ai.github.io/data_engineering_book/ja/part6/6_5_mm_rag/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://datascale-ai.github.io/data_engineering_book/ja/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://datascale-ai.github.io/data_engineering_book/en/part6/6_5_mm_rag/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://datascale-ai.github.io/data_engineering_book/part6/6_5_mm_rag/"/>
+    </url>
+</urlset>

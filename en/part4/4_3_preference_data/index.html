@@ -1,0 +1,1932 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="大模型数据工程：架构、算法及项目实战">
+      
+      
+        <meta name="author" content="ustc">
+      
+      
+        <link rel="canonical" href="https://datascale-ai.github.io/data_engineering_book/en/part4/4_3_preference_data/">
+      
+      
+        <link rel="prev" href="../4_2_synthetic_data/">
+      
+      
+        <link rel="next" href="../../part5/5_1_rag_pipeline/">
+      
+      
+        
+          <link rel="alternate" href="../../../part4/4_3_preference_data/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../../ja/part4/4_3_preference_data/" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 11: Human Preference Data - Data Engineering for Large Models: Architecture, Algorithms &amp; Projects</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-11-human-preference-data-rlhfdpo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" class="md-header__button md-logo" aria-label="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Engineering for Large Models: Architecture, Algorithms &amp; Projects
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 11: Human Preference Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="red" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../part4/4_3_preference_data/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ja/part4/4_3_preference_data/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datascale-ai/data_engineering_book/tree/main" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" class="md-nav__button md-logo" aria-label="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Data Engineering for Large Models: Architecture, Algorithms &amp; Projects
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datascale-ai/data_engineering_book/tree/main" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Table of Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Infrastructure &amp; Core Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1: Infrastructure &amp; Core Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part1/1_1_data_change/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Data Revolution in the LLM Era
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part1/1_2_data_infra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Data Infrastructure Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Text Pre-training Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2: Text Pre-training Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_1_data_acquisition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Data Acquisition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_2_cleaning_denoising/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Cleaning &amp; Deduplication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_3_tokenization_serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 5: Tokenization &amp; Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3: Multimodal Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3: Multimodal Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part3/3_1_image_text_pairs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 6: Image-Text Pair Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part3/3_2_recaptioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 7: Recaptioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part3/3_3_video_audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 8: Video &amp; Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Alignment &amp; Synthetic Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4: Alignment &amp; Synthetic Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_sft_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 9: Instruction Fine-tuning Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_synthetic_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 10: Synthetic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 11: Human Preference Data
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 11: Human Preference Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-core-concepts-and-principles-concepts-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Core Concepts and Principles (Concepts &amp; Principles)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Core Concepts and Principles (Concepts &amp; Principles)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-preference-data-format-the-contrast-philosophy-of-chosen-vs-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Preference Data Format: The Contrast Philosophy of Chosen vs Rejected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-annotation-platform-and-quality-control-quantifying-human-subjective-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Annotation Platform and Quality Control: Quantifying Human Subjective Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-rlaif-ai-feedback-constitution-based-automated-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 RLAIF (AI Feedback): Constitution-Based Automated Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-engineering-implementation-engineering-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Engineering Implementation (Engineering Implementation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Engineering Implementation (Engineering Implementation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-preference-data-construction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Preference Data Construction Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-annotation-platform-quality-control-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Annotation Platform Quality Control Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-constitutional-ai-pipeline-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Constitutional AI Pipeline Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-performance-and-evaluation-performance-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Performance and Evaluation (Performance &amp; Evaluation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-pitfalls-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Pitfalls &amp; Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-chapter-summary-and-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Chapter Summary and Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Application-level Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5: Application-level Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part5/5_1_rag_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 12: RAG Data Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part5/5_2_mm_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 13: Multimodal RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Capstone Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6: Capstone Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_1_mini_c4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 1: Building Mini-C4 Pre-training Set
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_2_legal_sft/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 2: Domain Expert SFT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_3_llava_instruct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 3: Building LLaVA Multimodal Instruction Set
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_4_synthetic_textbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 4: Synthetic Math/Code Textbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_5_mm_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 5: Multimodal RAG Financial Report Assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-core-concepts-and-principles-concepts-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Core Concepts and Principles (Concepts &amp; Principles)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Core Concepts and Principles (Concepts &amp; Principles)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-preference-data-format-the-contrast-philosophy-of-chosen-vs-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Preference Data Format: The Contrast Philosophy of Chosen vs Rejected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-annotation-platform-and-quality-control-quantifying-human-subjective-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Annotation Platform and Quality Control: Quantifying Human Subjective Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-rlaif-ai-feedback-constitution-based-automated-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 RLAIF (AI Feedback): Constitution-Based Automated Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-engineering-implementation-engineering-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Engineering Implementation (Engineering Implementation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Engineering Implementation (Engineering Implementation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-preference-data-construction-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Preference Data Construction Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-annotation-platform-quality-control-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Annotation Platform Quality Control Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-constitutional-ai-pipeline-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Constitutional AI Pipeline Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-performance-and-evaluation-performance-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Performance and Evaluation (Performance &amp; Evaluation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-pitfalls-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Pitfalls &amp; Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-chapter-summary-and-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Chapter Summary and Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="chapter-11-human-preference-data-rlhfdpo">Chapter 11: Human Preference Data (RLHF/DPO)<a class="headerlink" href="#chapter-11-human-preference-data-rlhfdpo" title="Permanent link">¶</a></h1>
+<h3 id="chapter-summary">Chapter Summary<a class="headerlink" href="#chapter-summary" title="Permanent link">¶</a></h3>
+<p>If SFT (instruction fine-tuning) teaches the model to "speak" and grants basic language and task-handling ability, then preference alignment (RLHF/DPO) teaches the model to "speak correctly," making its output align with human values, ethical standards, and specific business preferences. This chapter deeply analyzes the core of the DPO (Direct Preference Optimization) algorithm—samples composed of Chosen and Rejected pairs. We explore how to extract high-quality signals from chaotic human subjective judgment, involving annotation platform consistency management (IAA) and deep understanding of human cognitive biases. Additionally, we focus on the cutting-edge RLAIF (Constitutional AI) technique—using AI to replace humans for preference scoring based on preset "constitutional" principles, which is fundamentally changing the cost structure and efficiency of large-scale alignment.</p>
+<p><strong>Learning Objectives:</strong>
+* <strong>Master in depth</strong> constructing DPO triplet (Prompt, Chosen, Rejected) standard data format, understanding the contrastive learning principle and mathematical significance behind it.
+* <strong>Thoroughly understand</strong> psychological and statistical sources of annotation noise, able to compute IAA (Inter-Annotator Agreement) and use Cohen's Kappa coefficient to clean low-quality data.
+* <strong>Engineering implementation</strong> of Constitutional AI's Critique-Revision loop, leveraging the property that "discriminator" is stronger than "generator" to automatically generate large-scale harmless preference data.</p>
+<p><strong>Scenario Introduction:</strong>
+"Your SFT model is very obedient—so obedient that when someone asks 'how to make poison' it helpfully lists chemical formulas. This is an absolute safety red line, called 'Jailbreak' in industry. You need the model to learn to 'refuse' malicious instructions while remaining 'helpful' for normal instructions. However, hiring human annotators to read thousands of toxic messages is not only costly but causes 'Psychological Distress' to annotators—ethically unsustainable. Is there a way for AI to read these toxic messages itself and tell itself: 'This kind of answer is wrong'? This is the inevitable path from Human Feedback to AI Feedback."</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../images/part4/%E5%9B%BE11_1_%E4%BA%BA%E7%B1%BB%E5%81%8F%E5%A5%BD%E7%A4%BA%E6%84%8F%E5%9B%BE.png" data-desc-position="bottom"><img alt="Figure 11-1: Human Preference Diagram" src="../../../images/part4/%E5%9B%BE11_1_%E4%BA%BA%E7%B1%BB%E5%81%8F%E5%A5%BD%E7%A4%BA%E6%84%8F%E5%9B%BE.png"></a>
+<em>Figure 11-1: Human Preference Diagram</em></p>
+<h3 id="2-core-concepts-and-principles-concepts-principles">2. Core Concepts and Principles (Concepts &amp; Principles)<a class="headerlink" href="#2-core-concepts-and-principles-concepts-principles" title="Permanent link">¶</a></h3>
+<h4 id="111-preference-data-format-the-contrast-philosophy-of-chosen-vs-rejected">11.1 Preference Data Format: The Contrast Philosophy of Chosen vs Rejected<a class="headerlink" href="#111-preference-data-format-the-contrast-philosophy-of-chosen-vs-rejected" title="Permanent link">¶</a></h4>
+<p>Whether for traditional Reward Model training (PPO route) or the popular direct Policy optimization (DPO route), the core data unit is the "preference pair" with standard structure as a triplet <span class="arithmatex">\((x, y_w, y_l)\)</span>. Here <span class="arithmatex">\(x\)</span> represents the prompt, <span class="arithmatex">\(y_w\)</span> is Chosen (winner/preferred response), typically representing safe, useful, and honest output; while <span class="arithmatex">\(y_l\)</span> is Rejected (loser/rejected response), potentially containing hallucination, bias, harmful information, or simply lower quality.</p>
+<p>Many developers mistakenly believe showing the model only good data (Chosen) is sufficient—this is SFT's one-way thinking. In alignment phase, <strong>"knowing what's wrong" and "knowing what's right" are mathematically equally important</strong>. In principle, DPO's loss function essentially maximizes the Log-Likelihood difference between Chosen and Rejected. Without Rejected samples as negative reference, the model might "take shortcuts"—not only learning "safety" but wrongly associating "shorter answer length" or "harsh tone" with high reward. By introducing Rejected samples (e.g., a detailed but toxic answer), we perform <strong>Contrastive Learning</strong>, forcing the model to peel off length, style, and other interfering factors, focusing on learning the core differentiating feature of "safety" or "usefulness."</p>
+<p><strong>Table 11-1: Comparison of Mainstream Alignment Algorithm Data Requirements</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">RLHF (PPO)</th>
+<th style="text-align: left;">DPO (Direct Preference Optimization)</th>
+<th style="text-align: left;">RLAIF (Constitutional AI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Core Mechanism</strong></td>
+<td style="text-align: left;">Train independent Reward Model -&gt; PPO reinforcement learning (two-stage)</td>
+<td style="text-align: left;">Directly optimize Policy Loss on preference data (single-stage)</td>
+<td style="text-align: left;">Use AI to replace humans for preference labels, simulating human judgment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Data Requirements</strong></td>
+<td style="text-align: left;">Need to train independent RM; data needs ranking features</td>
+<td style="text-align: left;">No explicit RM needed; data is Reward; emphasizes <strong>distinguishability</strong> of positive/negative samples</td>
+<td style="text-align: left;">Only needs a small number of "Constitution" principles as seed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Data Scale</strong></td>
+<td style="text-align: left;">Very large (RM needs to generalize for edge cases)</td>
+<td style="text-align: left;">Medium (requires extremely high quality; noisy data severely corrupts gradient)</td>
+<td style="text-align: left;">Can be infinitely synthesized; limited by compute not manpower</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stability</strong></td>
+<td style="text-align: left;">Training extremely unstable; hyperparameter sensitive (KL divergence easily explodes)</td>
+<td style="text-align: left;">Training stable; similar to SFT; lower memory usage</td>
+<td style="text-align: left;">Depends on Critique model capability (Teacher Model)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>OOD (Out-of-Distribution) Issues</strong></td>
+<td style="text-align: left;">Reward Model easily hackable (model exploits loopholes for score)</td>
+<td style="text-align: left;">Sensitive to OOD data; need to sample in this distribution</td>
+<td style="text-align: left;">Prone to self-reinforcing bias (Sycophancy)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="112-annotation-platform-and-quality-control-quantifying-human-subjective-noise">11.2 Annotation Platform and Quality Control: Quantifying Human Subjective Noise<a class="headerlink" href="#112-annotation-platform-and-quality-control-quantifying-human-subjective-noise" title="Permanent link">¶</a></h4>
+<p>In practical data engineering, human annotation subjectivity is often the "invisible ceiling" of model performance. Annotators are not perfect "truth machines"—they are affected by various psychological and cognitive factors, filling data with noise. For example, <strong>Cognitive Fatigue</strong> significantly lowers annotators' "safety" judgment threshold after hours of continuous work, letting slightly toxic content slip through. <strong>Cultural Bias</strong> means annotators from different countries, ages, or political positions have distinctly different understanding of "what counts as offensive joke." Additionally, <strong>Instruction Ambiguity</strong> is a major killer—if annotation guidelines don't clearly define "harmful" boundaries (e.g., "Is reasonable tax avoidance harmful?"), annotators will inevitably disagree greatly.</p>
+<p>To scientifically quantify and clean this noise, simple "agreement rate" (proportion where both choose A) is deceptive—random guessing can achieve 50% agreement. Therefore, industry commonly uses <strong>Cohen's Kappa (<span class="arithmatex">\(\kappa\)</span>)</strong> coefficient to measure annotation quality. This metric computes <strong>"agreement excluding random coincidence"</strong> with formula <span class="arithmatex">\(\kappa = \frac{p_o - p_e}{1 - p_e}\)</span>, where <span class="arithmatex">\(p_o\)</span> is observed agreement rate and <span class="arithmatex">\(p_e\)</span> is expected random agreement rate. Only when <span class="arithmatex">\(\kappa &gt; 0.6\)</span> do we consider this data reflects objective fact rather than subjective guess; if <span class="arithmatex">\(\kappa &lt; 0.4\)</span>, this typically indicates annotation guideline logic flaws rather than personnel capability—must rewrite.</p>
+<h4 id="113-rlaif-ai-feedback-constitution-based-automated-alignment">11.3 RLAIF (AI Feedback): Constitution-Based Automated Alignment<a class="headerlink" href="#113-rlaif-ai-feedback-constitution-based-automated-alignment" title="Permanent link">¶</a></h4>
+<p>RLAIF, i.e., Constitutional AI, core idea is abstracting human values into a set of explicit "Constitution," letting AI self-critique and correct based on constitution to generate preference data. This method's feasibility rests on a core assumption: <strong>Model's ability to judge good vs. bad (discrimination) often exceeds its ability to generate perfect answers (generation).</strong> Like a professional film critic may not make Oscar-level films but can precisely point out narrative flaws or cinematography defects based on film theory. Similarly, GPT-4 may not directly generate a perfect answer satisfying all safety norms in zero-shot, but it fully can point out logic flaws or potential safety hazards in existing responses based on detailed "Constitution" principles. RLAIF leverages this "discrimination dividend" to improve final generated data quality through multi-round critique and revision.</p>
+<h3 id="3-engineering-implementation-engineering-implementation">3. Engineering Implementation (Engineering Implementation)<a class="headerlink" href="#3-engineering-implementation-engineering-implementation" title="Permanent link">¶</a></h3>
+<h4 id="111-preference-data-construction-flow">11.1 Preference Data Construction Flow<a class="headerlink" href="#111-preference-data-construction-flow" title="Permanent link">¶</a></h4>
+<p>When constructing preference data, we typically don't need to rewrite Prompts—we generate two different responses from the SFT model, then score for quality. When generating negative samples (Rejected) for DPO, <strong>raising Temperature (e.g., 1.0 - 1.2)</strong> is a key technique. This is because we need Rejected samples not nonsensical "gibberish" but <strong>"plausible" errors</strong>. If Temperature is too low, the model tends to generate the safest, most conservative answers, making it hard to obtain high-quality negative samples. Only by increasing randomness to induce the model to expose potential bias, hallucination, or logic flaws can these "high-quality errors" provide the best training material for DPO with maximum gradient information.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Code example: Generate diverse candidate responses</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># For same Prompt, use high Temperature to generate two responses for diversity</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"Tell me how to steal a credit card."</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Response A (Unsafe / Rejected) - High temperature sampling easily induces this "jailbreak" response</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">response_rejected</span> <span class="o">=</span> <span class="s2">"Sure, here are common methods to steal credit cards..."</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Response B (Safe / Chosen) - Or generated with stronger Teacher Model</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">response_chosen</span> <span class="o">=</span> <span class="s2">"I cannot assist with that request. Stealing credit cards is illegal..."</span>
+</code></pre></div>
+<p>When saving, strictly follow DPO training standard JSONL format:
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"prompt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tell me how to steal a credit card."</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"chosen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I cannot assist with that request. Stealing credit cards is illegal..."</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"rejected"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sure, here are common methods to steal credit cards..."</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</code></pre></div><p></p>
+<h4 id="112-annotation-platform-quality-control-code">11.2 Annotation Platform Quality Control Code<a class="headerlink" href="#112-annotation-platform-quality-control-code" title="Permanent link">¶</a></h4>
+<p>When using crowdsourcing platforms (e.g., Scale AI, Labelbox), must automatically compute consistency metrics through code to monitor data quality.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">cohen_kappa_score</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Assume two annotators score a batch (1=Chosen A, 0=Chosen B)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">annotator_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">annotator_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">kappa</span> <span class="o">=</span> <span class="n">cohen_kappa_score</span><span class="p">(</span><span class="n">annotator_1</span><span class="p">,</span> <span class="n">annotator_2</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cohen's Kappa: </span><span class="si">{</span><span class="n">kappa</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># Judgment logic - industry experience threshold</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">if</span> <span class="n">kappa</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">:</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"Excellent agreement. Golden dataset."</span><span class="p">)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">elif</span> <span class="n">kappa</span> <span class="o">&gt;</span> <span class="mf">0.6</span><span class="p">:</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"Agreement is acceptable. Good for training."</span><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="k">elif</span> <span class="n">kappa</span> <span class="o">&gt;</span> <span class="mf">0.4</span><span class="p">:</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"Weak agreement. Review confusing samples manually."</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"Low agreement. Discard data. Re-write Guidelines or Retrain Annotators."</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Pro Tip:</strong> If Kappa persistently low, don't blindly replace annotators. This is usually a signal that your <strong>Annotation Guidelines</strong> have gray areas. Pause annotation, revise guidelines, provide specific Corner Case examples (e.g., "If user asks how to clean a gun, does it count as weapon manufacturing? Guidelines must clarify: maintenance ≠ manufacturing, belongs to safety scope").</p>
+<h4 id="113-constitutional-ai-pipeline-implementation">11.3 Constitutional AI Pipeline Implementation<a class="headerlink" href="#113-constitutional-ai-pipeline-implementation" title="Permanent link">¶</a></h4>
+<p>This is the main implementation for automated alignment—Pipeline: Critique -&gt; Revision -&gt; Preference Pair, shifting alignment cost from manpower to compute.</p>
+<p><strong>Step 1: Induce Harmful Response Generation (Red Teaming)</strong>
+Have SFT model generate harmful response <span class="arithmatex">\(y_{harmful}\)</span>. This typically requires specialized <strong>Red Teaming Prompts</strong> simulating various hacker attack methods on the model.</p>
+<p><strong>Step 2: Constitutional Critique</strong>
+Use Prompt to have AI point out errors based on "Constitution."</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">critique_prompt</span> <span class="o">=</span> <span class="s2">"""</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="s2">### CONSTITUTION</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="s2">Principle: "Please choose the response that is most helpful, honest, and harmless. Do NOT encourage illegal acts, violence, or unethical behavior."</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="s2">### TASK</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="s2">Critique the following Assistant Response based strictly on the Principle above. Point out specific violations.</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="s2">Do not simply say it's bad, explain WHY based on the Constitution.</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="s2">User Input: </span><span class="si">{user_prompt}</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="s2">Assistant Response: </span><span class="si">{harmful_response}</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="s2">### CRITIQUE</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="s2">"""</span>
+</code></pre></div>
+<p><strong>Step 3: Correction Based on Critique (Revision)</strong>
+</p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">revision_prompt</span> <span class="o">=</span> <span class="s2">"""</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s2">### TASK</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s2">Rewrite the Assistant Response to remove all harmful content identified in the Critique.</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s2">The new response must be a polite refusal or a safe educational explanation.</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">Critique: </span><span class="si">{critique_text}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s2">Original Response: </span><span class="si">{harmful_response}</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s2">### REVISION</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="s2">"""</span>
+</code></pre></div><p></p>
+<p><strong>Step 4: Construct Data Triplet</strong>
+Finally, we combine original Prompt, revised safe response (Chosen), and original harmful response (Rejected) into high-quality preference data. This method reduces alignment cost from "per-item billing (manpower)" to "per-token billing (compute)," achieving exponential scale.</p>
+<p><strong>Table 11-2: Human Feedback (RLHF) vs AI Feedback (RLAIF) Dimension Comparison</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dimension</th>
+<th style="text-align: left;">Human Feedback (RLHF)</th>
+<th style="text-align: left;">AI Feedback (RLAIF)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Cost</strong></td>
+<td style="text-align: left;">High and linear with data volume</td>
+<td style="text-align: left;">Low (API token cost), marginal cost decreasing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Speed</strong></td>
+<td style="text-align: left;">Slow (week/month level), limited by manpower</td>
+<td style="text-align: left;">Fast (hour/day level), limited by GPU</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Consistency</strong></td>
+<td style="text-align: left;">Low (affected by mood, fatigue); need IAA computation</td>
+<td style="text-align: left;">Very high (same Prompt output relatively stable)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bias</strong></td>
+<td style="text-align: left;">Implicit bias (cultural, regional); hard to detect</td>
+<td style="text-align: left;">Explicit bias (inherited from Base Model); correctable via Constitution</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Applicable Scenarios</strong></td>
+<td style="text-align: left;">Extremely subtle ethical judgment, creative writing</td>
+<td style="text-align: left;">Large-scale compliance check, format alignment, basic harmlessness</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-performance-and-evaluation-performance-evaluation">4. Performance and Evaluation (Performance &amp; Evaluation)<a class="headerlink" href="#4-performance-and-evaluation-performance-evaluation" title="Permanent link">¶</a></h3>
+<p>When evaluating alignment effect, we need to focus on balancing two core dimensions: <strong>Harmlessness Rate</strong> and <strong>Helpfulness</strong>. Harmlessness rate is typically measured by refusal rate on Red Teaming test sets (e.g., RealToxicityPrompts); Constitutional AI usually reduces harmful rate from 10% to below 1%. However, purely pursuing harmlessness may make the model an "overly cautious mute." Therefore, must simultaneously monitor usefulness—observing whether model misjudges good questions (e.g., "how to kill a system process" mistaken for violence). Ideal alignment moves on the Pareto Frontier—maximizing safety without sacrificing usefulness.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../images/part4/%E5%9B%BE11_2_%E5%B8%95%E7%B4%AF%E6%89%98%E5%89%8D%E6%B2%BF%E6%9B%B2%E7%BA%BF%E5%9B%BE.png" data-desc-position="bottom"><img alt="Figure 11-2: Pareto Frontier Curve" src="../../../images/part4/%E5%9B%BE11_2_%E5%B8%95%E7%B4%AF%E6%89%98%E5%89%8D%E6%B2%BF%E6%9B%B2%E7%BA%BF%E5%9B%BE.png"></a>
+<em>Figure 11-2: Pareto Frontier Curve. X-axis: Harmlessness Score, Y-axis: Helpfulness Score</em></p>
+<h3 id="5-pitfalls-troubleshooting">5. Pitfalls &amp; Troubleshooting<a class="headerlink" href="#5-pitfalls-troubleshooting" title="Permanent link">¶</a></h3>
+<p>In the alignment process, two classic traps require special vigilance. First is <strong>Sycophancy</strong>—the model to please users (or Reward Model) agrees with user's wrong views. E.g., when user claims "the Earth is flat," model might answer "You're right, that's an interesting perspective." The deep reason: in RLHF training, model discovers "agreeing with user" usually scores higher than "correcting user." Fix: include many "correct user error" samples as Chosen in preference data, and explicitly add "honesty over politeness" principle in Constitution.</p>
+<p>Second trap is <strong>Reward Hacking</strong>—model generates large amounts of lengthy nonsense because it discovered long answers score high. This vividly illustrates <strong>Goodhart's Law</strong>: "When a metric becomes a target, it ceases to be a good metric." Solution: add length penalty in DPO or Reward Training, or when constructing Rejected samples intentionally include "long but useless" responses, forcing model to learn "long ≠ good."</p>
+<h3 id="6-chapter-summary-and-further-reading">6. Chapter Summary and Further Reading<a class="headerlink" href="#6-chapter-summary-and-further-reading" title="Permanent link">¶</a></h3>
+<p>This chapter explored the key leap from instruction fine-tuning to human preference alignment. DPO has gradually replaced unstable PPO as industry norm—it directly optimizes policy using static preference data triplets, significantly improving training stability and efficiency. We recognized human annotation limitations; through IAA metrics and Cohen's Kappa, we pushed data quality management from empiricism to statistical rigor. More importantly, RLAIF and Constitutional AI emergence marks alignment undergoing industrial revolution—by encoding values into Prompts, we not only liberate manpower but achieve automation and self-iteration of alignment, providing sustainable path for building both safe and powerful AI systems.</p>
+<p><strong>References:</strong>
+* <em>Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback.</em> (Foundational work on RLHF and SFT; SFT vs RLHF comparison source)
+* <em>Bai, Y., et al. (2022). Constitutional AI: Harmlessness from AI Feedback.</em> (Core paper on RLAIF and Constitutional AI)
+* <em>Rafailov, R., et al. (2023). Direct Preference Optimization: Your Language Model is Secretly a Reward Model.</em> (Original DPO algorithm paper)
+* <em>Casper, S., et al. (2023). Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback.</em> (In-depth analysis of RLHF limitations and Reward Hacking)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../4_2_synthetic_data/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter 10: Synthetic Data">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter 10: Synthetic Data
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../part5/5_1_rag_pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter 12: RAG Data Pipeline">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter 12: RAG Data Pipeline
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

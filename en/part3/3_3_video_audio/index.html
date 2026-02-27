@@ -1,0 +1,2129 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="大模型数据工程：架构、算法及项目实战">
+      
+      
+        <meta name="author" content="ustc">
+      
+      
+        <link rel="canonical" href="https://datascale-ai.github.io/data_engineering_book/en/part3/3_3_video_audio/">
+      
+      
+        <link rel="prev" href="../3_2_recaptioning/">
+      
+      
+        <link rel="next" href="../../part4/4_1_sft_data/">
+      
+      
+        
+          <link rel="alternate" href="../../../part3/3_3_video_audio/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../../ja/part3/3_3_video_audio/" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 8: Video &amp; Audio Data - Data Engineering for Large Models: Architecture, Algorithms &amp; Projects</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-8-video-and-audio-data-processing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" class="md-header__button md-logo" aria-label="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Engineering for Large Models: Architecture, Algorithms &amp; Projects
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 8: Video &amp; Audio Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="red" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../part3/3_3_video_audio/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ja/part3/3_3_video_audio/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datascale-ai/data_engineering_book/tree/main" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" class="md-nav__button md-logo" aria-label="Data Engineering for Large Models: Architecture, Algorithms &amp; Projects" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Data Engineering for Large Models: Architecture, Algorithms &amp; Projects
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datascale-ai/data_engineering_book/tree/main" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Table of Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Infrastructure &amp; Core Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1: Infrastructure &amp; Core Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part1/1_1_data_change/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Data Revolution in the LLM Era
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part1/1_2_data_infra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Data Infrastructure Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Text Pre-training Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2: Text Pre-training Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_1_data_acquisition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Data Acquisition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_2_cleaning_denoising/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Cleaning &amp; Deduplication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part2/2_3_tokenization_serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 5: Tokenization &amp; Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3: Multimodal Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3: Multimodal Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_image_text_pairs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 6: Image-Text Pair Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_recaptioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 7: Recaptioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 8: Video &amp; Audio Data
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 8: Video &amp; Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-8-video-and-audio-data-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 8: Video and Audio Data Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 8: Video and Audio Data Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#81-video-processing-pipeline-scene-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Video Processing Pipeline: Scene Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Video Processing Pipeline: Scene Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#811-micro-view-of-video-structure-gop-and-i-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.1 Micro-view of Video Structure: GOP and I-Frames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#812-algorithm-selection-and-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.2 Algorithm Selection and Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#813-core-code-scene-detection-and-lossless-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.3 Core Code: Scene Detection and Lossless Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-video-tokenization-from-pixel-ocean-to-discrete-islands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Video Tokenization: From Pixel Ocean to Discrete Islands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Video Tokenization: From Pixel Ocean to Discrete Islands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#821-traditional-approach-pain-vq-vae-and-dead-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.1 Traditional Approach Pain: VQ-VAE and "Dead Codes"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#822-sota-approach-magvit-v2-and-lfq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.2 SOTA Approach: MagViT-v2 and LFQ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#823-architecture-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.3 Architecture Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-audio-alignment-whisperx-and-forced-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Audio Alignment: WhisperX and Forced Alignment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Audio Alignment: WhisperX and Forced Alignment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#831-why-forced-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.1 Why Forced Alignment?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#832-engineering-implementation-whisperx-full-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.2 Engineering Implementation: WhisperX Full Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#833-production-environment-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.3 Production Environment Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Alignment &amp; Synthetic Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4: Alignment &amp; Synthetic Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part4/4_1_sft_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 9: Instruction Fine-tuning Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part4/4_2_synthetic_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 10: Synthetic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part4/4_3_preference_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 11: Human Preference Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Application-level Data Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5: Application-level Data Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part5/5_1_rag_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 12: RAG Data Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part5/5_2_mm_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 13: Multimodal RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Capstone Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6: Capstone Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_1_mini_c4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 1: Building Mini-C4 Pre-training Set
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_2_legal_sft/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 2: Domain Expert SFT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_3_llava_instruct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 3: Building LLaVA Multimodal Instruction Set
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_4_synthetic_textbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 4: Synthetic Math/Code Textbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../part6/6_5_mm_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project 5: Multimodal RAG Financial Report Assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-8-video-and-audio-data-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 8: Video and Audio Data Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 8: Video and Audio Data Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#81-video-processing-pipeline-scene-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Video Processing Pipeline: Scene Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Video Processing Pipeline: Scene Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#811-micro-view-of-video-structure-gop-and-i-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.1 Micro-view of Video Structure: GOP and I-Frames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#812-algorithm-selection-and-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.2 Algorithm Selection and Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#813-core-code-scene-detection-and-lossless-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.3 Core Code: Scene Detection and Lossless Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-video-tokenization-from-pixel-ocean-to-discrete-islands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Video Tokenization: From Pixel Ocean to Discrete Islands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Video Tokenization: From Pixel Ocean to Discrete Islands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#821-traditional-approach-pain-vq-vae-and-dead-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.1 Traditional Approach Pain: VQ-VAE and "Dead Codes"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#822-sota-approach-magvit-v2-and-lfq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.2 SOTA Approach: MagViT-v2 and LFQ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#823-architecture-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.3 Architecture Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-audio-alignment-whisperx-and-forced-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Audio Alignment: WhisperX and Forced Alignment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Audio Alignment: WhisperX and Forced Alignment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#831-why-forced-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.1 Why Forced Alignment?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#832-engineering-implementation-whisperx-full-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.2 Engineering Implementation: WhisperX Full Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#833-production-environment-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.3 Production Environment Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Chapter 8: Video &amp; Audio Data</h1>
+
+<h2 id="chapter-8-video-and-audio-data-processing">Chapter 8: Video and Audio Data Processing<a class="headerlink" href="#chapter-8-video-and-audio-data-processing" title="Permanent link">¶</a></h2>
+<h3 id="chapter-summary">Chapter Summary<a class="headerlink" href="#chapter-summary" title="Permanent link">¶</a></h3>
+<p>Video data is the modality with the largest volume, highest processing difficulty, and most complex information density in multimodal large model (LMM) training, referred to as the "deep water" of multimodal engineering. Unlike static images, video introduces the <strong>Temporal Dimension</strong>, meaning data is not merely pixel stacking but carries causal logic, physical laws, and motion patterns.</p>
+<p>This chapter systematically breaks down how to transform continuous, unstructured video streams into discrete tokens the model can understand. We will start from the underlying <strong>Shot Boundary Detection</strong>, analyze content-based segmentation algorithms in depth; then analyze the "heart" of video generation—<strong>Video Tokenizer</strong>, comparing underlying principles of VQ-VAE and Google DeepMind's latest MagViT-v2; finally, we will demonstrate how to use <strong>WhisperX</strong> to achieve word-level and even phoneme-level precise alignment of audio and video, building spatio-temporally synchronized supervision signals for the model.</p>
+<p><strong>Learning Objectives</strong>:
+* <strong>Engineering Capability</strong>: Master using PySceneDetect combined with ffmpeg keyframe metadata for efficient two-stage scene segmentation (Coarse-to-Fine) strategy.
+* <strong>Theoretical Depth</strong>: Deeply understand the "Codebook Collapse" problem in Video Tokenization, and how MagViT-v2 completely solves this bottleneck through Lookup-Free Quantization (LFQ).
+* <strong>Data Pipeline</strong>: Implement WhisperX-based Forced Alignment flow to solve precise subtitle alignment for multi-speaker, background noise acoustic environments.
+* <strong>Storage Optimization</strong>: Understand storage sharding and efficient loading for massive video data.</p>
+<p><strong>Scenario Introduction</strong>:</p>
+<blockquote>
+<p>"Imagine you are training a world model like Sora. You have downloaded the 2-hour movie <em>Titanic</em> as training data.</p>
+<p>If you simply split by every 10 seconds, you'll encounter severe 'semantic discontinuity': the first 5 seconds of a segment might be calm sea breeze on deck, the next 5 seconds suddenly jump to a noisy restaurant. This cross-scene 'hard cut' will confuse the model: 'How did the person teleport from outdoors to indoors in 0.1 seconds?' This not only wastes compute but teaches the model wrong physics.</p>
+<p>Furthermore, audio temporal precision is life. If your subtitles lag 2 seconds behind the picture, when Rose's mouth is moving on screen, the corresponding token is Jack's dialogue. The model will incorrectly associate 'Jack's voice features' with 'Rose's facial features.' In trillion-token training, such subtle misalignment can amplify into severe hallucinations."</p>
+</blockquote>
+<hr>
+<h3 id="81-video-processing-pipeline-scene-detection">8.1 Video Processing Pipeline: Scene Detection<a class="headerlink" href="#81-video-processing-pipeline-scene-detection" title="Permanent link">¶</a></h3>
+<p>Video is fundamentally not a continuous stream but a sequence of independent "shots" concatenated together. Each shot represents one camera turn-on and turn-off (or continuous camera movement). Training video generative models (Video Generative Models) requires each training sample (Training Clip) to be within the same shot, ensuring <strong>Spatio-Temporal Continuity</strong>.</p>
+<h4 id="811-micro-view-of-video-structure-gop-and-i-frames">8.1.1 Micro-view of Video Structure: GOP and I-Frames<a class="headerlink" href="#811-micro-view-of-video-structure-gop-and-i-frames" title="Permanent link">¶</a></h4>
+<p>Before diving into segmentation algorithms, we need to understand the basics of video encoding.</p>
+<ul>
+<li><strong>I-Frame (Intra-coded picture)</strong>: Keyframe. It is a complete image that can be decoded without depending on other frames. Usually also the starting point of scene transitions.</li>
+<li><strong>P-Frame (Predicted picture)</strong>: Forward-predicted frame. Only stores the difference from the previous frame.</li>
+<li><strong>B-Frame (Bi-predictive picture)</strong>: Bi-directional predicted frame. References both past and future frames for compression, highest compression ratio.</li>
+</ul>
+<p><strong>GOP (Group of Pictures)</strong>: The sequence between two I-frames. When a video player seeks, it typically "snaps" to the nearest I-frame because decoding must start there. Our segmentation strategy must leverage this to accelerate.</p>
+<h4 id="812-algorithm-selection-and-strategy">8.1.2 Algorithm Selection and Strategy<a class="headerlink" href="#812-algorithm-selection-and-strategy" title="Permanent link">¶</a></h4>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../images/part3/%E5%9B%BE8_1_%E8%A7%86%E9%A2%91%E5%9C%BA%E6%99%AF%E5%88%87%E5%88%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%AD%96%E7%95%A5%E4%B8%8EHSV%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%B7%AE%E5%BC%82.png" data-desc-position="bottom"><img alt="Figure 8-1: Two Video Scene Segmentation Strategies and HSV Histogram Difference" src="../../../images/part3/%E5%9B%BE8_1_%E8%A7%86%E9%A2%91%E5%9C%BA%E6%99%AF%E5%88%87%E5%88%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%AD%96%E7%95%A5%E4%B8%8EHSV%E7%9B%B4%E6%96%B9%E5%9B%BE%E5%B7%AE%E5%BC%82.png"></a>
+<em>Figure 8-1: Two Video Scene Segmentation Strategies and HSV Histogram Difference</em></p>
+<p><strong>PySceneDetect</strong> is the industry-standard open-source tool. It provides multiple detectors, with core logic based on inter-frame difference analysis:</p>
+<ul>
+<li>
+<p><strong>Strategy One: Threshold Detector (Hard Cut)</strong></p>
+<ul>
+<li><strong>Principle</strong>: Compute average difference (Delta) between adjacent frames in HSV color space or RGB brightness. When Delta &gt; <code>threshold</code> (e.g., 30_0), mark as cut point.</li>
+<li><strong>Applicable</strong>: Most movies and user-generated content (UGC).</li>
+<li><strong>Limitation</strong>: Cannot detect gradual transitions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Strategy Two: Adaptive Detector (Gradual Transitions / Fast Cut)</strong></p>
+<ul>
+<li><strong>Principle</strong>: No longer uses fixed threshold; maintains a sliding window. Compares ratio of "current frame" vs. "average frame difference within window."</li>
+<li><strong>Applicable</strong>: Fade in/out, dissolve, or action scenes with intense camera movement.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Advanced Strategy: Two-Stage Cascade Splitting</strong>
+Running PySceneDetect on full decoded TB-scale video is very slow. We recommend the industrial "coarse then fine" approach:</p>
+<ol>
+<li><strong>Level-1 (Metadata Scan)</strong>: Use <code>ffprobe</code> to quickly scan video stream metadata, extract all <strong>I-Frame</strong> timestamps. I-frames often appear at scene transitions (encoders tend to insert I-frames at abrupt changes). This step requires no frame decoding; speed is 100x+ over playback.</li>
+<li><strong>Level-2 (Content Analysis)</strong>: Only run PySceneDetect's <code>ContentDetector</code> for precise frame-level localization within ±2 seconds of Level-1 identified potential cut points.</li>
+</ol>
+<h4 id="813-core-code-scene-detection-and-lossless-segmentation">8.1.3 Core Code: Scene Detection and Lossless Segmentation<a class="headerlink" href="#813-core-code-scene-detection-and-lossless-segmentation" title="Permanent link">¶</a></h4>
+<p>The code below demonstrates the standard segmentation flow in production. Note the "stream copy" technique—key to avoiding storage explosion when processing massive video.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scenedetect</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect</span><span class="p">,</span> <span class="n">ContentDetector</span><span class="p">,</span> <span class="n">split_video_ffmpeg</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Configure logging</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">'</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">process_video_scenes</span><span class="p">(</span><span class="n">video_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">27_0</span><span class="p">):</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">    Detect scenes and cut video with ffmpeg losslessly</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sd">        video_path: Input video path</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sd">        output_dir: Output directory</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="sd">        threshold: Segmentation threshold (empirical: 27_0 works for most 1080p video)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sd">    """</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Starting scene detection for: </span><span class="si">{</span><span class="n">video_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="c1"># 1. Scene detection</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="c1"># threshold=27_0: HSV space histogram difference threshold</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="c1"># min_scene_len=15: Ignore segments shorter than 0.5s (30fps).</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="c1"># Very short segments are usually flash, glitch, or segmentation noise—unsuitable for training data.</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">scene_list</span> <span class="o">=</span> <span class="n">detect</span><span class="p">(</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="n">video_path</span><span class="p">,</span> 
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="n">ContentDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">min_scene_len</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="c1"># 2. Statistics and filtering</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="c1"># Add logic here: e.g., merge overly short adjacent scenes, or discard scenes under 3 seconds</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">valid_scenes</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="k">for</span> <span class="n">scene</span> <span class="ow">in</span> <span class="n">scene_list</span><span class="p">:</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">scene</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span><span class="o">.</span><span class="n">get_frames</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="o">.</span><span class="n">get_frames</span><span class="p">())</span> <span class="o">/</span> <span class="n">start</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">()</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;=</span> <span class="mi">3_0</span><span class="p">:</span> <span class="c1"># Keep only segments &gt;3s for training</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>            <span class="n">valid_scenes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">scene_list</span><span class="p">)</span><span class="si">}</span><span class="s2"> scenes, kept </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_scenes</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid scenes."</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="c1"># 3. Split video (Stream Copy)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="c1"># Key: arg_override='-c:v copy -c:a copy'</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>    <span class="c1"># This instructs ffmpeg to directly copy the binary stream without [decode -&gt; pixels -&gt; encode].</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    <span class="c1"># Benefit 1: Extremely fast (limited by disk I/O, not CPU).</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    <span class="c1"># Benefit 2: 100% lossless quality, no re-encoding artifacts.</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>    <span class="n">split_video_ffmpeg</span><span class="p">(</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">video_path</span><span class="p">,</span> 
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="n">valid_scenes</span><span class="p">,</span> 
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> 
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>        <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>        <span class="n">arg_override</span><span class="o">=</span><span class="s1">'-c:v copy -c:a copy'</span> 
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    <span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="c1"># Pitfall: Data storage explosion disaster</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="c1"># NEVER decode segmented video into image sequences (png/jpg) or numpy arrays for long-term storage!</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="c1"># Do the math:</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="c1"># 1 hour 1080p H.264 video ≈ 2GB</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="c1"># Decoded: 3600s * 30fps * 1920 * 1080 * 3 bytes ≈ 670 GB</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="c1"># Expansion factor &gt; 300x.</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="c1"># Always store in compressed format (mp4/mkv), only use GPU (NVDEC) for real-time decoding in training DataLoader __getitem__.</span>
+</code></pre></div>
+<hr>
+<h3 id="82-video-tokenization-from-pixel-ocean-to-discrete-islands">8.2 Video Tokenization: From Pixel Ocean to Discrete Islands<a class="headerlink" href="#82-video-tokenization-from-pixel-ocean-to-discrete-islands" title="Permanent link">¶</a></h3>
+<p>For Sora, Gen-2 and other Transformer-based diffusion models (DiT), modeling directly in pixel space is infeasible. A 4-second 1080p video contains about <span class="arithmatex">\(3 \times 10^8\)</span> pixels; computing the attention matrix would cause instant OOM.</p>
+<p>Therefore, video must first be "compressed" into discrete tokens in latent space. This process is done by <strong>Video Tokenizer</strong>.</p>
+<h4 id="821-traditional-approach-pain-vq-vae-and-dead-codes">8.2.1 Traditional Approach Pain: VQ-VAE and "Dead Codes"<a class="headerlink" href="#821-traditional-approach-pain-vq-vae-and-dead-codes" title="Permanent link">¶</a></h4>
+<p><strong>VQ-VAE (Vector Quantized Variational AutoEncoder)</strong> is the foundation of early video generative models (e.g., VideoGPT).</p>
+<ul>
+<li>
+<p><strong>Flow</strong>:</p>
+<ol>
+<li><strong>Encoder</strong>: Split video into 3D patches (e.g., <span class="arithmatex">\(16 \times 16 \times 16\)</span> spatio-temporal blocks), compress to low-dimensional vectors <span class="arithmatex">\(z_e(x)\)</span>.</li>
+<li><strong>Quantization</strong>: Maintain a Codebook with <span class="arithmatex">\(K\)</span> prototype vectors (Embeddings). For each <span class="arithmatex">\(z_e(x)\)</span>, find the nearest vector <span class="arithmatex">\(e_k\)</span> in Codebook by Euclidean distance to replace it.</li>
+<li><strong>Decoder</strong>: Use <span class="arithmatex">\(e_k\)</span> to reconstruct video.</li>
+</ol>
+</li>
+<li>
+<p><strong>Fatal flaw: Codebook Collapse</strong>
+    Early in training, only a few codes (e.g., Code #5 and #100) are accidentally selected. Since only selected codes receive gradient updates, they become "better" and easier to be selected again. This forms a "rich get richer" Matthew effect.</p>
+<ul>
+<li><strong>Consequence</strong>: 90% of Codebook vectors become "dead codes," never used. This leads to extremely low effective vocabulary, generating blurry and detail-lacking video.</li>
+<li><strong>Remediation</strong>: Traditional methods require complex Reset strategies (e.g., k-means reset), training extremely unstable.</li>
+</ul>
+</li>
+</ul>
+<h4 id="822-sota-approach-magvit-v2-and-lfq">8.2.2 SOTA Approach: MagViT-v2 and LFQ<a class="headerlink" href="#822-sota-approach-magvit-v2-and-lfq" title="Permanent link">¶</a></h4>
+<p>Google DeepMind introduced <strong>LFQ (Lookup-Free Quantization)</strong> in MagViT-v2, fundamentally changing the game.</p>
+<ul>
+<li>
+<p><strong>Core idea: No lookup, direct computation.</strong>
+    LFQ abandons the "find nearest neighbor" approach and directly generates tokens from the <strong>sign</strong> of latent variables.</p>
+</li>
+<li>
+<p><strong>Mathematical principle</strong>:
+    Assume Encoder output latent vector <span class="arithmatex">\(z \in \mathbb{R}^D\)</span> (e.g., <span class="arithmatex">\(D=18\)</span>).
+    LFQ binarizes each dimension:
+    $<span class="arithmatex">\(q_i = \begin{cases} 1 &amp; \text{if } z_i &gt; 0 \\ 0 &amp; \text{if } z_i \le 0 \end{cases}\)</span>$</p>
+<p>Then combine the <span class="arithmatex">\(D\)</span> binary bits into an integer index:
+$<span class="arithmatex">\(\text{Token ID} = \sum_{i=0}^{D-1} q_i \cdot 2^i\)</span>$</p>
+</li>
+<li>
+<p><strong>Why is LFQ revolutionary?</strong></p>
+<ol>
+<li><strong>Infinite effective codebook</strong>: If <span class="arithmatex">\(D=18\)</span>, the natural codebook size is <span class="arithmatex">\(2^{18} = 262,144\)</span>. All codes are combinations of <span class="arithmatex">\(D\)</span> independent dimensions; each dimension always participates in gradient updates. <strong>Codebook utilization is constant at 100%.</strong></li>
+<li><strong>Zero compute cost</strong>: No expensive "full codebook distance computation"—only simple bit operations.</li>
+<li><strong>Spatio-temporal compression</strong>: MagViT-v2 combines <strong>3D Causal CNN</strong>, preserving temporal causality while compressing space (current token never leaks future information), critical for generative models.</li>
+</ol>
+</li>
+</ul>
+<h4 id="823-architecture-comparison-table">8.2.3 Architecture Comparison Table<a class="headerlink" href="#823-architecture-comparison-table" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">VQ-VAE (TATS/VideoGPT)</th>
+<th style="text-align: left;">MagViT-v2 (LFQ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Quantization Mechanism</strong></td>
+<td style="text-align: left;">Nearest Neighbor Search (lookup)</td>
+<td style="text-align: left;">Sign Function (sign projection)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Vocabulary Size (Vocab)</strong></td>
+<td style="text-align: left;">Typically 1024 - 8192 (limited by VRAM and collapse)</td>
+<td style="text-align: left;"><span class="arithmatex">\(2^{18}\)</span> (262k) or larger, easily extensible</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Codebook Utilization</strong></td>
+<td style="text-align: left;">Low (prone to collapse, needs EMA etc.)</td>
+<td style="text-align: left;"><strong>100% (design avoids collapse)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gradient Backprop</strong></td>
+<td style="text-align: left;">Requires Straight-Through Estimator (STE)</td>
+<td style="text-align: left;">Improved Entropy Penalty + STE</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Generation Quality</strong></td>
+<td style="text-align: left;">Prone to blur, detail texture loss</td>
+<td style="text-align: left;">Extremely clear, even better than original (denoising effect)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inference Speed</strong></td>
+<td style="text-align: left;">Slower (especially with large codebook)</td>
+<td style="text-align: left;">Extremely fast</td>
+</tr>
+<tr>
+<td style="text-align: left;">---</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>The evolution from VQ-VAE to MagViT-v2 is not simple parameter optimization but a paradigm shift in video discretization technology—from "search-based approximation" to "computation-based construction."</p>
+<p>First, in computational complexity and scalability, traditional VQ-VAE has fundamental bottlenecks. Its quantization depends on nearest neighbor search, requiring computing Euclidean distance between feature vectors and all <span class="arithmatex">\(K\)</span> prototypes in the codebook—time complexity <span class="arithmatex">\(O(K)\)</span>. This means expanding vocabulary to improve representation directly causes linear growth in inference latency. In contrast, MagViT-v2's LFQ (Lookup-Free Quantization) abandons lookup, using the sign function to project latent variables to binary strings. This process reduces compute complexity to constant <span class="arithmatex">\(O(1)\)</span>, enabling the model to support <span class="arithmatex">\(2^{18}\)</span> or larger vocabulary without sacrificing inference speed, resolving the contradiction between large vocabulary and low latency.</p>
+<p>Second, in codebook utilization and training stability, the two differ markedly. VQ-VAE has long suffered from "Codebook Collapse"—some encoding vectors never activate due to initialization or uneven gradient allocation, causing effective vocabulary to be far below design (often only 1024-8192). This forces researchers to introduce EMA (exponential moving average) or k-means reset and other complex engineering tricks. MagViT-v2's LFQ, based on independent dimension binarization combination, mathematically guarantees that codebook space is "combinatorially generated" rather than "discretely searched." As long as latent space dimensions stay active, the combined codes naturally cover the entire codebook space, achieving theoretical 100% utilization.</p>
+<p>In summary, MagViT-v2's LFQ achieves unification of high compression, high fidelity, and low compute cost, completely solving traditional VQ-VAE's defects in detail texture loss and poor spatio-temporal consistency. For building Sora-scale massive video generative models, MagViT-v2 and derived Tokenizer architectures have become the industry's preferred choice.</p>
+<h3 id="83-audio-alignment-whisperx-and-forced-alignment">8.3 Audio Alignment: WhisperX and Forced Alignment<a class="headerlink" href="#83-audio-alignment-whisperx-and-forced-alignment" title="Permanent link">¶</a></h3>
+<p>Video is not only visual data—audio (Audio) provides natural, temporally dense text descriptions. Using audio, we can let the model learn multi-modal associations like "explosion sound corresponds to explosion light," "crying corresponds to tears."</p>
+<p>However, ordinary ASR (e.g., raw Whisper) only gives "sentence-level" timestamps, typically 1-2 second error. This is completely insufficient for fine video training (e.g., lip-sync). We need <strong>WhisperX</strong>.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../images/part3/%E5%9B%BE8_2_ASR%E4%B8%8EWhisperX%E7%9A%84%E7%B2%BE%E5%BA%A6%E5%AF%B9%E6%AF%94.png" data-desc-position="bottom"><img alt="Figure 8-2: Precision Comparison of Ordinary ASR (Segment-level) vs WhisperX (Word/Phoneme-level)" src="../../../images/part3/%E5%9B%BE8_2_ASR%E4%B8%8EWhisperX%E7%9A%84%E7%B2%BE%E5%BA%A6%E5%AF%B9%E6%AF%94.png"></a>
+<em>Figure 8-2: Precision Comparison of Ordinary ASR (Segment-level) vs WhisperX (Word/Phoneme-level)</em></p>
+<h4 id="831-why-forced-alignment">8.3.1 Why Forced Alignment?<a class="headerlink" href="#831-why-forced-alignment" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>ASR (OpenAI Whisper)</strong>:<ul>
+<li>Output: <code>"Hello world"</code> -&gt; <code>Timestamp: [0_0s -&gt; 2_0s]</code></li>
+<li>Problem: Model only knows the sentence falls within these 2 seconds, not exactly when "world" starts.</li>
+</ul>
+</li>
+<li><strong>Forced Alignment (WhisperX)</strong>:<ul>
+<li>Principle: First transcribe to text, then use a pre-trained acoustic model (e.g., Wav2Vec2) to forcibly match <strong>phonemes</strong> in the text with audio waveform.</li>
+<li>Output:<ul>
+<li><code>"Hello"</code>: <code>[0_12s -&gt; 0_58s]</code></li>
+<li><code>"world"</code>: <code>[0_85s -&gt; 1_45s]</code></li>
+</ul>
+</li>
+<li><strong>Value</strong>: You can build training pairs like: when video frame is at 0_85s, force model to focus on "world" Text Embedding. This is the foundation for fine multimodal alignment.</li>
+</ul>
+</li>
+</ul>
+<h4 id="832-engineering-implementation-whisperx-full-pipeline">8.3.2 Engineering Implementation: WhisperX Full Pipeline<a class="headerlink" href="#832-engineering-implementation-whisperx-full-pipeline" title="Permanent link">¶</a></h4>
+<p>WhisperX is a complex Pipeline combining VAD (voice activity detection), Whisper (transcription), Wav2Vec2 (alignment), and Pyannote (speaker diarization).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">whisperx</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">align_audio_transcript</span><span class="p">(</span><span class="n">audio_file</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cuda"</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="sd">    Use WhisperX for transcription and word-level forced alignment</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="sd">    """</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="c1"># Step 1: Transcription</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="c1"># Use Large-v2 model for transcript accuracy</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="c1"># compute_type="float16" significantly speeds up, but requires Ampere+ GPU (A100/A10/3090/4090)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Loading Whisper model..."</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">whisperx</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="s2">"large-v2"</span><span class="p">,</span> 
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="n">device</span><span class="p">,</span> 
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="n">compute_type</span><span class="o">=</span><span class="s2">"float16"</span> 
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Transcribing..."</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">audio</span> <span class="o">=</span> <span class="n">whisperx</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    <span class="c1"># Critical: VRAM management</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>    <span class="c1"># Whisper model is huge, and the next Alignment model is also VRAM-heavy.</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="c1"># Must explicitly delete model and trigger garbage collection, otherwise easily OOM (Out of Memory).</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="k">del</span> <span class="n">model</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>    <span class="c1"># Step 2: Forced Alignment</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="c1"># Auto-loads corresponding language Wav2Vec2 model (e.g., wav2vec2-large-960h for English)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"3. Aligning..."</span><span class="p">)</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>    <span class="n">model_a</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">whisperx</span><span class="o">.</span><span class="n">load_align_model</span><span class="p">(</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        <span class="n">language_code</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s2">"language"</span><span class="p">],</span> 
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>        <span class="n">device</span><span class="o">=</span><span class="n">device</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>    <span class="p">)</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>    <span class="c1"># align() executes a Dynamic Programming-like algorithm</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>    <span class="c1"># finding best matching path between text phoneme sequence and audio waveform features</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>    <span class="n">aligned_result</span> <span class="o">=</span> <span class="n">whisperx</span><span class="o">.</span><span class="n">align</span><span class="p">(</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">"segments"</span><span class="p">],</span> 
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>        <span class="n">model_a</span><span class="p">,</span> 
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>        <span class="n">metadata</span><span class="p">,</span> 
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>        <span class="n">audio</span><span class="p">,</span> 
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>        <span class="n">device</span><span class="p">,</span> 
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>        <span class="n">return_char_alignments</span><span class="o">=</span><span class="kc">False</span> <span class="c1"># Set True for character-level alignment (e.g., for karaoke subtitles)</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    <span class="p">)</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>    <span class="c1"># Result contains word_segments with precise start/end for each word</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>    <span class="c1"># e.g.: [{'word': 'Hello', 'start': 0_1, 'end': 0_5, 'score': 0_98}, ...]</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>    <span class="k">return</span> <span class="n">aligned_result</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="c1"># Advanced tip:</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="c1"># For speaker diarization (who said what), further call:</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="c1"># diarize_model = whisperx.DiarizationPipeline(use_auth_token="YOUR_HF_TOKEN", device=device)</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="c1"># diarize_segments = diarize_model(audio)</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="c1"># whisperx.assign_word_speakers(diarize_segments, aligned_result)</span>
+</code></pre></div>
+<h4 id="833-production-environment-pitfalls">8.3.3 Production Environment Pitfalls<a class="headerlink" href="#833-production-environment-pitfalls" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p><strong>VAD Misjudgment and Background Music Interference</strong>:</p>
+<ul>
+<li><strong>Problem</strong>: WhisperX heavily relies on VAD for segmenting silent segments. If video BGM is loud, VAD may treat entire segment as speech, or vice versa, drowning out speech.</li>
+<li><strong>Solution</strong>: Introduce <strong>Demucs</strong> or <strong>Spleeter</strong> for source separation.</li>
+<li><strong>Flow</strong>: <code>Raw Audio</code> -&gt; <code>Demucs (Extract Vocal Track)</code> -&gt; <code>WhisperX</code>. Feed only extracted pure vocal track to recognition for significantly higher accuracy.</li>
+</ul>
+</li>
+<li>
+<p><strong>Multi-speaker Overlap (Overlapping Speech)</strong>:</p>
+<ul>
+<li><strong>Problem</strong>: Whisper weakly handles multiple people speaking simultaneously (Cocktail Party Problem), usually only transcribing the loudest person or generating confused text.</li>
+<li><strong>Solution</strong>: Enable <code>diarization=True</code>. Though this adds 30%-50% inference time, for TV drama, interview-class video data it's the only way to distinguish "who said what," avoiding model confusion of character identity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Hallucination Timestamps</strong>:</p>
+<ul>
+<li><strong>Problem</strong>: Whisper may produce "hallucinations" during long silence or pure music segments—repeating previous lyrics with wrong timestamp.</li>
+<li><strong>Check</strong>: In post-processing, check <code>word['score']</code> (confidence). If a consecutive string of words has confidence below 0_4, recommend discarding that segment's alignment.</li>
+</ul>
+</li>
+</ol>
+<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../3_2_recaptioning/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter 7: Recaptioning">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter 7: Recaptioning
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../part4/4_1_sft_data/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter 9: Instruction Fine-tuning Data">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter 9: Instruction Fine-tuning Data
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
